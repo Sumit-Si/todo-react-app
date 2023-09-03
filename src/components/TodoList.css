@@ -1,0 +1,8 @@
+.todo-container {
+    /* outline: 2px solid #ff0000; */
+    margin: 0.6em auto;
+    width: 100%;
+    padding: 2em 2.4em;
+    border-radius: 0.4em;
+    background-color: #f0f0f0;
+}
