@@ -1,28 +1,36 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import TodoDispatchContext from "../Context/TodoContext";
 import './AddTodo.css';
 
-function AddTodo({todos}) {
+const initialTodos = {name:''};
 
-    const dispatch = useContext(TodoDispatchContext);
+function AddTodo({addTodos}) { 
+    // console.log(addTodos);
+    console.log('render AddTodo');
+
+    const [todo,setTodos] = useState(initialTodos);
+    // console.log(todo);
+
+    // const dispatch = useContext(TodoDispatchContext);
 
     function handleChange(e) {
-        // console.log(dispatch);
-        // dispatch
-        console.log(e.target.name,e.target.value);
-
+        e.stopPropagation();
+        setTodos({...todo,
+            [e.target.name] : e.target.value});
     } 
 
     function handleSubmit(e) {
         e.preventDefault();
+        addTodos(todo);             // this will take the todo data to App Component where it is defined.
+        setTodos(initialTodos);     // this will clear the input after submited form.
     }
 
     return (
         // 'Add Todo'
         <div className="form-cont">
             <form>
-                <input type="text" class="todo-input" name="todo-name" placeholder="Add Todo" onChange={handleChange} />
-                <input type="submit" className="todo-input input-btn" value={'submit'} onSubmit={handleSubmit}/>
+                <input type="text" className="todo-input" name="name" placeholder="Add Todo" onChange={handleChange} value={todo.name} />
+                <input type="submit" className="todo-input input-btn" value={'submit'} onClick={handleSubmit}/>
             </form>
         </div>
     )

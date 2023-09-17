@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList";
 import Video from "./components/Video";
 import data from "./todo-data/data";
 import TodoDispatchContext from "./Context/TodoContext";
-import { useReducer } from "react";
+import { useState } from "react";
 
 // function App() {      // this is a functional component
 
@@ -36,29 +36,24 @@ import { useReducer } from "react";
 // export default App;
 
 function App() {
-  function todoReducer(todo, action) {
-    switch (action.type) {
-      case "ADD":
-        return [...todo, { ...action.payload, id: todo.length + 1 }];
+  console.log('render App');
 
-      case "DELETE":
-        return todo.filter((todoData) => todoData.id !== action.payload);
+  const [todos,setTodos] = useState(data);
 
-      case "UPDATE":
-        const index = todo.findIndex((t) => t.id === action.payload.id);
-        const newTodos = [...todo];
-        newTodos.splice(index, 1, action.payload);
-        return newTodos;
+  function addTodos(formTodo) {
+    setTodos(
+      [...todos,
+      {...formTodo,id: todos.length+1}
+    ]);
+  }
+  // console.log(todos);
 
-      default:
-        return todo;
-    }
+  function deleteTodos(deleteId) {
+    console.log(deleteId);
   }
 
-  const [todo, dispatch] = useReducer(todoReducer, data);
-
   return (
-    <TodoDispatchContext.Provider value={dispatch}>
+    // <TodoDispatchContext.Provider >
       <div className="App">
         <div
           style={{
@@ -72,14 +67,14 @@ function App() {
           </h1>
           <div className="container">
             {/*dispatch={dispatch({ type: "ADD", payload: todo })}*/}
-            <AddTodo todos={data} />
+            <AddTodo addTodos={addTodos} />
           </div>
           <div className="container">
-            <TodoList />
+            <TodoList deleteTodo={deleteTodos} data={todos} />
           </div>
         </div>
       </div>
-    </TodoDispatchContext.Provider>
+    // </TodoDispatchContext.Provider>
   );
 }
 

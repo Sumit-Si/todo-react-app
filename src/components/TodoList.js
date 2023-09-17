@@ -1,16 +1,18 @@
 import Todo from "./Todo";
-import data from "../todo-data/data";
 import './TodoList.css';
 import Button from "./Button";
 
-function TodoList() {
+function TodoList({data,deleteTodo}) { 
      
     return (
         // 'Todo list'
         <div className="todo-container">
         {
             data.map(todoData =><Todo
+                key={todoData.id}
                 name={todoData.name}
+                id={todoData.id}
+                deleteId={deleteTodo}
                 >
                 </Todo>
             )

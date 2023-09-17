@@ -1,9 +1,13 @@
 import './Button.css';
 
-function Button({children}) {
+function Button({children,smackClick,deleteTodo}) {
 
+    function handleClick() {
+        // console.log(smackClick);
+        deleteTodo(smackClick);
+    }
     return (
-        <button className='btn'>{children}</button>
+        <button onClick={handleClick} className='btn'>{children}</button>
     )
 }
 
