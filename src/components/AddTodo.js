@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TodoDispatchContext from "../Context/TodoContext";
 import './AddTodo.css';
 
 const initialTodos = {name:''};
 
-function AddTodo({addTodos}) { 
+function AddTodo({addTodos,updateTodo,editTableTodo}) { 
     // console.log(addTodos);
     console.log('render AddTodo');
 
@@ -21,16 +21,27 @@ function AddTodo({addTodos}) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        addTodos(todo);             // this will take the todo data to App Component where it is defined.
+        if(editTableTodo) {
+            updateTodo(todo);
+        } else {
+            addTodos(todo);             // this will take the todo data to App Component where it is defined.
+        }
         setTodos(initialTodos);     // this will clear the input after submited form.
     }
+
+    useEffect(() => {
+        // console.log('useEffect');
+        if(editTableTodo) {
+            setTodos(editTableTodo);        // now it works for edit todos.
+        }
+    },[editTableTodo]);
 
     return (
         // 'Add Todo'
         <div className="form-cont">
             <form>
                 <input type="text" className="todo-input" name="name" placeholder="Add Todo" onChange={handleChange} value={todo.name} />
-                <input type="submit" className="todo-input input-btn" value={'submit'} onClick={handleSubmit}/>
+                <input type="submit" className="todo-input input-btn" value={editTableTodo ? 'edit' : 'submit'} onClick={handleSubmit}/>
             </form>
         </div>
     )

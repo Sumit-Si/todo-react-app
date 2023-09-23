@@ -2,7 +2,7 @@ import Todo from "./Todo";
 import './TodoList.css';
 import Button from "./Button";
 
-function TodoList({data,deleteTodo}) { 
+function TodoList({data,deleteTodo,editTodos}) { 
      
     return (
         // 'Todo list'
@@ -12,7 +12,8 @@ function TodoList({data,deleteTodo}) {
                 key={todoData.id}
                 name={todoData.name}
                 id={todoData.id}
-                deleteId={deleteTodo}
+                deleteTodo={deleteTodo}
+                editTodos={editTodos}
                 >
                 </Todo>
             )

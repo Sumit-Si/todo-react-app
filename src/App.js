@@ -39,9 +39,10 @@ function App() {
   console.log('render App');
 
   const [todos,setTodos] = useState(data);
+  const [editTableTodo,setEditTableVideo] = useState(null);
 
   function addTodos(formTodo) {
-    setTodos(
+    setTodos( 
       [...todos,
       {...formTodo,id: todos.length+1}
     ]);
@@ -49,7 +50,24 @@ function App() {
   // console.log(todos);
 
   function deleteTodos(deleteId) {
-    console.log(deleteId);
+    // console.log(deleteId);
+    // console.log(todos.filter(item => item.id !== deleteId));
+    setTodos(todos.filter(item => item.id !== deleteId));
+  }
+
+  function editTodos(editId) {    // to get the edit data from id and send it to addTodo to edit it.
+    // console.log(editId);
+    // console.log(todos.find(item => item.id === editId));
+    setEditTableVideo(todos.find(item => item.id === editId));
+  }
+
+  function updateTodo(editData) {
+    // console.log(editData);
+    let index = todos.findIndex(item=>item.id === editData.id)
+    const newTodos = [...todos];
+    newTodos.splice(index,1,editData);
+    // console.log(newTodos);
+    setTodos(newTodos);
   }
 
   return (
@@ -67,10 +85,10 @@ function App() {
           </h1>
           <div className="container">
             {/*dispatch={dispatch({ type: "ADD", payload: todo })}*/}
-            <AddTodo addTodos={addTodos} />
+            <AddTodo addTodos={addTodos} updateTodo={updateTodo} editTableTodo={editTableTodo} />
           </div>
           <div className="container">
-            <TodoList deleteTodo={deleteTodos} data={todos} />
+            <TodoList deleteTodo={deleteTodos} editTodos={editTodos} data={todos} />
           </div>
         </div>
       </div>
