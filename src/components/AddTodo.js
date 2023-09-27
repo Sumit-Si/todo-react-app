@@ -4,12 +4,12 @@ import './AddTodo.css';
 
 const initialTodos = {name:''};
 
-function AddTodo({addTodos,updateTodo,editTableTodo}) { 
+function AddTodo({dispatch,editTableTodo}) { 
     // console.log(addTodos);
     console.log('render AddTodo');
 
     const [todo,setTodos] = useState(initialTodos);
-    // console.log(todo);
+    // console.log(todo); 
 
     // const dispatch = useContext(TodoDispatchContext);
 
@@ -22,9 +22,11 @@ function AddTodo({addTodos,updateTodo,editTableTodo}) {
     function handleSubmit(e) {
         e.preventDefault();
         if(editTableTodo) {
-            updateTodo(todo);
+            dispatch({type:'UPDATE',payload:todo});
+            // updateTodo(todo);
         } else {
-            addTodos(todo);             // this will take the todo data to App Component where it is defined.
+            dispatch({type:'ADD',payload:todo});
+            // addTodos(todo);             // this will take the todo data to App Component where it is defined.
         }
         setTodos(initialTodos);     // this will clear the input after submited form.
     }
